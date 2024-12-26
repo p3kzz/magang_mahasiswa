@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('magang', function (Blueprint $table) {
+        Schema::create('catatan', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pembimbing_id')->constrained('pembimbing');
             $table->foreignId('mahasiswa_id')->constrained('mahasiswa');
-            $table->string('lokasi_magang');
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
-            $table->enum('status', ['menunggu', 'diterima', 'ditolak']);
+            $table->text('catatan');
+            $table->foreignId('jadwal_id')->constrained('jadwal');
+            $table->enum('status', ['belum_selesai', 'sudah_selesai'])->default('belum_selesai');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('magang');
+        Schema::dropIfExists('catatan');
     }
 };
